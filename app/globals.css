@@ -1,0 +1,314 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-slate-50 text-ink antialiased;
+  background-image:
+    radial-gradient(circle at 14% 10%, rgba(255, 138, 61, 0.08), transparent 16%),
+    radial-gradient(circle at top, rgba(31, 111, 255, 0.14), transparent 30%),
+    radial-gradient(circle at 78% 18%, rgba(79, 209, 255, 0.08), transparent 20%),
+    radial-gradient(circle at 12% 82%, rgba(79, 209, 255, 0.08), transparent 22%),
+    linear-gradient(180deg, #f8fbff 0%, #eef4ff 42%, #f7f9fe 100%);
+  min-height: 100vh;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(31, 111, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(31, 111, 255, 0.04) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.45), transparent 88%);
+  opacity: 0.5;
+}
+
+* {
+  border-color: rgba(6, 22, 51, 0.08);
+}
+
+.panel {
+  @apply border bg-white/75 backdrop-blur-xl;
+  box-shadow:
+    0 0 0 1px rgba(31, 111, 255, 0.03),
+    inset 0 1px 0 rgba(255, 255, 255, 0.82),
+    0 26px 80px rgba(71, 98, 145, 0.14);
+}
+
+.panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.72), transparent 38%);
+  opacity: 0.9;
+}
+
+.section-shell {
+  @apply mx-auto max-w-7xl px-6 lg:px-8;
+}
+
+.section-space {
+  @apply py-20 md:py-28;
+}
+
+.section-band {
+  position: relative;
+}
+
+.section-band::before {
+  content: "";
+  position: absolute;
+  inset: 1.5rem 0;
+  border-top: 1px solid rgba(31, 111, 255, 0.06);
+  border-bottom: 1px solid rgba(31, 111, 255, 0.06);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.38), rgba(255, 255, 255, 0.14)),
+    radial-gradient(circle at top right, rgba(79, 209, 255, 0.08), transparent 28%);
+  pointer-events: none;
+}
+
+.section-band > * {
+  position: relative;
+  z-index: 1;
+}
+
+.eyebrow {
+  @apply inline-flex items-center rounded-full border border-electric/10 bg-electric/5 px-3 py-1 text-xs font-medium uppercase tracking-[0.24em] text-electric;
+}
+
+.gradient-text {
+  background: linear-gradient(120deg, #061633 10%, #1f6fff 40%, #4fd1ff 70%, #ff4fa3 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.section-divider {
+  @apply mt-16 h-px w-full bg-gradient-to-r from-transparent via-electric/15 to-transparent;
+}
+
+.hero-orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(28px);
+  opacity: 0.65;
+  pointer-events: none;
+}
+
+.soft-grid {
+  background-image:
+    linear-gradient(rgba(31, 111, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(31, 111, 255, 0.06) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.operator-chip {
+  @apply inline-flex items-center gap-2 rounded-full border bg-white/80 px-3 py-2 text-xs font-medium text-slate-600 backdrop-blur-md transition duration-300 hover:border-cyan/30 hover:text-ink;
+}
+
+.operator-chip-dot {
+  @apply h-2 w-2 rounded-full;
+}
+
+.light-card {
+  @apply border bg-white/80;
+  box-shadow: 0 18px 40px rgba(71, 98, 145, 0.14);
+}
+
+.glass-tile {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(31, 111, 255, 0.1);
+  background:
+    radial-gradient(circle at 10% 0%, rgba(79, 209, 255, 0.14), transparent 40%),
+    radial-gradient(circle at 88% 100%, rgba(31, 111, 255, 0.05), transparent 44%),
+    linear-gradient(155deg, rgba(255, 255, 255, 0.92), rgba(247, 250, 255, 0.88));
+  box-shadow: 0 18px 38px rgba(71, 98, 145, 0.16);
+}
+
+.glass-tile::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 3px;
+  background: linear-gradient(90deg, rgba(31, 111, 255, 0.78), rgba(79, 209, 255, 0.82), rgba(138, 92, 255, 0.32));
+}
+
+.roadmap-tile {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(31, 111, 255, 0.1);
+  background:
+    radial-gradient(circle at top right, rgba(79, 209, 255, 0.16), transparent 42%),
+    radial-gradient(circle at bottom left, rgba(31, 111, 255, 0.05), transparent 45%),
+    linear-gradient(165deg, rgba(255, 255, 255, 0.94), rgba(245, 249, 255, 0.92));
+  box-shadow: 0 18px 40px rgba(71, 98, 145, 0.14);
+}
+
+.roadmap-tile::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 4px;
+  background: linear-gradient(90deg, rgba(31, 111, 255, 0.78), rgba(79, 209, 255, 0.85), rgba(138, 92, 255, 0.34));
+}
+
+.why-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(31, 111, 255, 0.12);
+  background:
+    radial-gradient(circle at 10% 0%, rgba(79, 209, 255, 0.14), transparent 38%),
+    radial-gradient(circle at 90% 100%, rgba(31, 111, 255, 0.05), transparent 46%),
+    linear-gradient(165deg, rgba(255, 255, 255, 0.94), rgba(246, 249, 255, 0.9));
+  box-shadow: 0 18px 40px rgba(71, 98, 145, 0.14);
+}
+
+.why-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 4px;
+  background: linear-gradient(90deg, rgba(31, 111, 255, 0.85), rgba(79, 209, 255, 0.85), rgba(138, 92, 255, 0.42));
+}
+
+.surface-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(6, 22, 51, 0.08);
+  background:
+    radial-gradient(circle at top left, rgba(79, 209, 255, 0.1), transparent 34%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 255, 0.86));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 18px 36px rgba(71, 98, 145, 0.12);
+}
+
+.surface-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), transparent 35%);
+  opacity: 0.65;
+}
+
+.access-graphic {
+  border: 1px solid rgba(31, 111, 255, 0.08);
+  background:
+    radial-gradient(circle at top right, rgba(79, 209, 255, 0.14), transparent 32%),
+    radial-gradient(circle at bottom left, rgba(138, 92, 255, 0.08), transparent 30%),
+    linear-gradient(180deg, rgba(247, 250, 255, 0.94), rgba(241, 246, 255, 0.88));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 18px 36px rgba(71, 98, 145, 0.12);
+}
+
+.preview-kicker {
+  @apply font-mono text-[11px] uppercase tracking-[0.22em] text-slate-600;
+}
+
+.interactive-surface {
+  transition:
+    transform 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease,
+    background-color 220ms ease;
+}
+
+.interactive-surface:hover {
+  transform: translateY(-4px);
+  border-color: rgba(79, 209, 255, 0.24);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 26px 52px rgba(71, 98, 145, 0.18),
+    0 0 0 1px rgba(79, 209, 255, 0.12);
+}
+
+.metric-tile {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(31, 111, 255, 0.12);
+  background:
+    radial-gradient(circle at top right, rgba(79, 209, 255, 0.16), transparent 34%),
+    radial-gradient(circle at bottom left, rgba(31, 111, 255, 0.05), transparent 34%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(245, 249, 255, 0.9));
+  box-shadow: 0 18px 34px rgba(71, 98, 145, 0.14);
+}
+
+.metric-tile::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 3px;
+  background: linear-gradient(90deg, rgba(79, 209, 255, 0.75), rgba(31, 111, 255, 0.75), rgba(255, 79, 163, 0.6));
+}
+
+.metric-tile-value {
+  text-wrap: balance;
+}
+
+.link-arrow {
+  position: relative;
+}
+
+.link-arrow::after {
+  content: "\2192";
+  margin-left: 0.5rem;
+  transition: transform 180ms ease;
+  display: inline-block;
+}
+
+.link-arrow:hover::after {
+  transform: translateX(3px);
+}
+
+.cta-primary {
+  @apply rounded-full bg-electric px-6 py-3 text-sm font-semibold text-white transition;
+  box-shadow:
+    0 18px 34px rgba(31, 111, 255, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.cta-primary:hover {
+  transform: translateY(-2px);
+  background: #2d82ff;
+}
+
+.cta-secondary {
+  @apply rounded-full border border-slate-200 bg-white/85 px-6 py-3 text-sm font-semibold text-slate-700 transition;
+  box-shadow: 0 14px 32px rgba(71, 98, 145, 0.12);
+}
+
+.cta-secondary:hover {
+  border-color: rgba(79, 209, 255, 0.4);
+  color: #1f6fff;
+}
+
+.list-check {
+  @apply flex items-start gap-3 text-sm leading-7 text-slate-600;
+}
+
+.list-check-dot {
+  @apply mt-2 h-2.5 w-2.5 rounded-full bg-gradient-to-r from-electric to-cyan;
+}
