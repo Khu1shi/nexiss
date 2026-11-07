@@ -11,7 +11,7 @@ const faqItems = [
   {
     question: "What does GEO mean?",
     answer:
-      "GEO stands for Generative Engine Optimization: monitoring and improving how a cafe appears inside AI-generated answers."
+      "GEO stands for Generative Engine Optimization: monitoring and improving how a brand appears inside AI-generated answers."
   },
   {
     question: "Why is this different from SEO?",
@@ -58,35 +58,36 @@ export function InvestorSection() {
         />
       </div>
 
-      <div id="faq" className="mt-16 grid gap-4 md:grid-cols-2">
+      <div id="faq" className="mt-16 grid items-start gap-5 md:grid-cols-2">
         {faqItems.map((item, index) => {
           const isOpen = openIndex === index;
 
           return (
             <div
               key={item.question}
-              className={`panel rounded-[28px] p-6 transition ${isOpen ? "border-cyan/25 shadow-[0_20px_44px_rgba(71,98,145,0.16)]" : ""}`}
+              className="rounded-3xl bg-white p-7 shadow-sm transition-all duration-200 border border-slate-100"
             >
               <button
                 type="button"
-                className="flex w-full items-start justify-between gap-4 text-left"
+                className="flex w-full items-start justify-between gap-4 text-left focus:outline-none"
                 onClick={() => setOpenIndex(isOpen ? -1 : index)}
                 aria-expanded={isOpen}
               >
-                <h3 className="text-xl font-semibold text-ink">{item.question}</h3>
-                <span className="grid h-8 w-8 place-items-center rounded-full border border-slate-200 bg-white/85 text-cyan">
-                  {isOpen ? "-" : "+"}
+                <h3 className="text-lg font-bold text-slate-900 leading-snug">
+                  {item.question}
+                </h3>
+                <span className="text-xl font-normal text-slate-400 shrink-0">
+                  {isOpen ? "−" : "+"}
                 </span>
               </button>
-              <div
-                className={`grid transition-all duration-300 ${
-                  isOpen ? "mt-4 grid-rows-[1fr] opacity-100" : "mt-0 grid-rows-[0fr] opacity-70"
-                }`}
-              >
-                <div className="overflow-hidden">
-                  <p className="text-base leading-8 text-slate-600">{item.answer}</p>
+              
+              {isOpen && (
+                <div className="mt-4">
+                  <p className="text-sm text-slate-500 leading-relaxed">
+                    {item.answer}
+                  </p>
                 </div>
-              </div>
+              )}
             </div>
           );
         })}
