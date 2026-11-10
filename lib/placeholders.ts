@@ -9,6 +9,12 @@ export const heroMetrics: Metric[] = [
   { label: "Cafe Visibility", value: "+18%" }
 ];
 
+export const investorMetrics: Metric[] = [
+  { label: "Models", value: "04" },
+  { label: "Prompts Tracked", value: "128" },
+  { label: "Brand Visibility", value: "+18%" }
+];
+
 export const queryMetrics: Metric[] = [
   { label: "Top 3 Rank", value: "#02" },
   { label: "Citation Share", value: "31%" },
@@ -16,13 +22,13 @@ export const queryMetrics: Metric[] = [
 ];
 
 export const workflowMetrics: Metric[] = [
-  { label: "Cafe Entities", value: "126" },
+  { label: "Brand Entities", value: "126" },
   { label: "Model Outputs", value: "24k" },
   { label: "Rank States", value: "Live" }
 ];
 
 export const productMetrics: Metric[] = [
   { label: "GEO Score", value: "78.4" },
-  { label: "Local Zones", value: "12" },
-  { label: "Tracked Cafes", value: "48" }
+  { label: "Global Regions", value: "12" },
+  { label: "Tracked Brands", value: "48" }
 ];

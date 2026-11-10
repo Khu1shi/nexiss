@@ -8,10 +8,12 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+  overflow-x: clip;
 }
 
 body {
-  @apply bg-slate-50 text-ink antialiased;
+  @apply overflow-x-clip bg-slate-50 text-ink antialiased;
   background-image:
     radial-gradient(circle at 14% 10%, rgba(255, 138, 61, 0.08), transparent 16%),
     radial-gradient(circle at top, rgba(31, 111, 255, 0.14), transparent 30%),

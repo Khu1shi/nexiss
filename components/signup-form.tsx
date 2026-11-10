@@ -10,6 +10,44 @@ const initialState = {
   city: ""
 };
 
+const pipelineSteps = [
+  {
+    step: "01",
+    title: "Request",
+    desc: "Domain submitted",
+    dot: "bg-[#5BB8F5]",
+    active: true
+  },
+  {
+    step: "02",
+    title: "Review",
+    desc: "Fit & market",
+    dot: "bg-[#2F5BEA]",
+    active: false
+  },
+  {
+    step: "03",
+    title: "Invite",
+    desc: "Follow-up",
+    dot: "bg-[#A855F7]",
+    active: false
+  }
+] as const;
+
+const prioritySegments = [
+  { label: "Founders", tag: "Pilot-ready", dot: "bg-[#5BB8F5]" },
+  { label: "Agencies", tag: "High fit", dot: "bg-[#2F5BEA]" },
+  { label: "Investors", tag: "Briefing", dot: "bg-[#A855F7]" }
+] as const;
+
+const formFields = [
+  { key: "name", label: "Name", type: "text", span: false },
+  { key: "email", label: "Email", type: "email", span: false },
+  { key: "company", label: "Company", type: "text", span: false },
+  { key: "industry", label: "Industry", type: "text", span: false },
+  { key: "city", label: "City", type: "text", span: true }
+] as const;
+
 export function SignupForm() {
   const [formData, setFormData] = useState(initialState);
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
@@ -44,84 +82,86 @@ export function SignupForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="rounded-[32px] border border-slate-100 bg-white p-6 shadow-sm md:p-8"
+      className="rounded-[28px] border border-[#E5E7EB] bg-white p-6 font-[family-name:var(--font-jakarta),var(--font-sans),sans-serif] shadow-[0_1px_2px_rgba(15,23,42,0.04)] sm:rounded-[36px] sm:p-8 lg:p-9"
     >
       {/* Form Header */}
-      <div className="mb-6 flex items-start justify-between gap-4">
-        <div>
-          <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.25em] text-slate-400">
+      <div className="flex flex-col gap-3 border-b border-[#EEF0F5] pb-5 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
+        <div className="min-w-0">
+          <p className="font-mono text-[12px] font-semibold uppercase tracking-[0.1em] text-[#64748B]">
             Request Access
           </p>
-          <p className="mt-2 text-sm leading-snug text-slate-500">
+          <p className="mt-1.5 text-[13px] leading-[1.4] text-[#64748B] xl:text-[13.5px]">
             Share a few details and we&apos;ll follow up with launch updates, demos, and invite availability.
           </p>
         </div>
-        <span className="shrink-0 rounded-full border border-sky-200 bg-sky-50/50 px-3 py-1 text-xs font-medium text-sky-500">
+        <span className="inline-flex w-fit shrink-0 items-center rounded-full border border-[#BFDBFE] bg-[#EAF4FF] px-3.5 py-1 font-mono text-[12px] font-semibold text-[#1D4E89]">
           Beta
         </span>
       </div>
 
       {/* Dashboard Graphic Widget Panel */}
-      <div className="mb-8 rounded-3xl border border-slate-100 bg-slate-50/50 p-5 md:p-6">
+      <div className="mt-5 rounded-[24px] border border-[#E5E7EB] bg-[#FCFCFD] p-4 sm:rounded-[28px] sm:p-6">
         {/* Top Grid: Access Pipeline (Left) & Priority Segments (Right) */}
-        <div className="grid gap-6 md:grid-cols-[1.2fr_0.8fr]">
+        <div className="grid items-start gap-6 lg:grid-cols-[1.08fr_0.92fr] lg:gap-6">
           {/* Left Side: Access Pipeline */}
-          <div>
-            <div className="flex items-center justify-between gap-2">
-              <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-400">
+          <div className="min-w-0">
+            <div className="flex min-h-[28px] items-center justify-between gap-2">
+              <span className="font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-[#94A3B8]">
                 Access Pipeline
               </span>
-              <span className="rounded-full border border-slate-200 bg-white px-2.5 py-0.5 font-mono text-[10px] font-medium uppercase tracking-wider text-slate-500">
+              <span className="rounded-full border border-[#D1D5DB] bg-white px-3 py-0.5 font-mono text-[10.5px] font-semibold uppercase tracking-[0.04em] text-[#1F2937]">
                 Invite-based
               </span>
             </div>
 
-            <div className="mt-4 grid grid-cols-3 gap-3">
-              {[
-                { step: "01", title: "Request", desc: "Domain submitted", dot: "bg-sky-400", active: true },
-                { step: "02", title: "Review", desc: "Fit & market", dot: "bg-blue-600", active: false },
-                { step: "03", title: "Invite", desc: "Follow-up", dot: "bg-purple-500", active: false }
-              ].map((item) => (
+            <div className="mt-3.5 grid grid-cols-1 gap-2.5 sm:grid-cols-3">
+              {pipelineSteps.map((item) => (
                 <div
                   key={item.title}
-                  className={`rounded-2xl bg-white px-3.5 py-3 transition-all ${
+                  className={`flex min-h-[104px] flex-col justify-start rounded-[16px] px-3 py-3 transition-colors ${
                     item.active
-                      ? "border-2 border-sky-300 shadow-xs"
-                      : "border border-slate-100"
+                      ? "border-[1.5px] border-[#7DC6F5] bg-[#F5FAFF]"
+                      : "border border-[#E5E7EB] bg-white"
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="font-mono text-[11px] text-slate-400">{item.step}</span>
+                    <span className="font-mono text-[11px] tracking-normal text-[#94A3B8]">
+                      {item.step}
+                    </span>
                     <span className={`h-2 w-2 rounded-full ${item.dot}`} />
                   </div>
-                  <p className="mt-2 text-sm font-bold text-slate-900">{item.title}</p>
-                  <p className="mt-1 text-[11px] leading-tight text-slate-400">{item.desc}</p>
+                  <p className="mt-2 text-[14.5px] font-semibold leading-tight text-[#0F172A]">
+                    {item.title}
+                  </p>
+                  <p className="mt-1 text-[11.5px] leading-[1.35] text-[#94A3B8]">
+                    {item.desc}
+                  </p>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Right Side: Priority Segments */}
-          <div>
-            <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-400">
-              Priority Segments
-            </span>
+          <div className="min-w-0">
+            <div className="flex min-h-[28px] items-center">
+              <span className="font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-[#94A3B8]">
+                Priority Segments
+              </span>
+            </div>
 
-            <div className="mt-4 space-y-3">
-              {[
-                { label: "Founders", tag: "Pilot-ready", dot: "bg-sky-400" },
-                { label: "Agencies", tag: "High fit", dot: "bg-blue-600" },
-                { label: "Investors", tag: "Briefing", dot: "bg-purple-500" }
-              ].map((segment) => (
+            <div className="mt-3.5 space-y-2.5">
+              {prioritySegments.map((segment) => (
                 <div
                   key={segment.label}
-                  className="flex items-center justify-between rounded-2xl border border-slate-100 bg-white px-4 py-3.5 shadow-2xs"
+                  className="flex items-center justify-between gap-2 rounded-[16px] border border-[#E5E7EB] bg-white px-3.5 py-2.5"
                 >
-                  <div className="flex items-center gap-3">
-                    <span className={`h-2.5 w-2.5 rounded-full ${segment.dot}`} />
-                    <span className="text-sm font-bold text-slate-800">{segment.label}</span>
+                  <div className="flex min-w-0 items-center gap-2.5">
+                    <span className={`h-2.5 w-2.5 shrink-0 rounded-full ${segment.dot}`} />
+                    <span className="truncate text-[14.5px] font-normal text-[#0F172A]">
+                      {segment.label}
+                    </span>
                   </div>
-                  <span className="rounded-xl border border-slate-100 bg-slate-50/80 px-3 py-1 font-mono text-[11px] text-slate-400">
+                  <span className="shrink-0 rounded-[8px] border border-[#D1D5DB] bg-[#F3F4F6] px-2.5 py-0.5 font-mono text-[11px] text-[#6B7280]">
                     {segment.tag}
                   </span>
                 </div>
@@ -131,32 +171,26 @@ export function SignupForm() {
         </div>
 
         {/* Full-Width Bottom Section: Waitlist Quality Bar */}
-        <div className="mt-6 border-t border-slate-200/50 pt-4">
-          <div className="flex items-center justify-between text-[11px]">
-            <span className="font-mono font-semibold uppercase tracking-[0.2em] text-slate-400">
+        <div className="mt-5 border-t border-[#EEF0F5] pt-4">
+          <div className="flex items-center justify-between gap-2 text-[11px]">
+            <span className="font-mono font-medium uppercase tracking-[0.08em] text-[#94A3B8]">
               Waitlist Quality
             </span>
-            <span className="font-mono font-semibold uppercase tracking-wider text-blue-600">
+            <span className="font-mono font-bold uppercase tracking-[0.04em] text-[#2F5BEA]">
               Prioritized Review
             </span>
           </div>
-          <div className="mt-2.5 h-1.5 w-full overflow-hidden rounded-full bg-slate-200/60">
-            <div className="h-full w-[60%] rounded-full bg-blue-500" />
+          <div className="mt-2.5 h-2 w-full overflow-hidden rounded-full bg-[#E2E8F0]">
+            <div className="h-full w-[60%] rounded-full bg-[linear-gradient(90deg,#5BB8F5_0%,#2F5BEA_100%)]" />
           </div>
         </div>
       </div>
 
       {/* Input Fields */}
-      <div className="grid gap-4 md:grid-cols-2">
-        {[
-          { key: "name", label: "Name", type: "text" },
-          { key: "email", label: "Email", type: "email" },
-          { key: "company", label: "Company", type: "text" },
-          { key: "industry", label: "Industry", type: "text" },
-          { key: "city", label: "City", type: "text", span: true }
-        ].map((field) => (
-          <label key={field.key} className={field.span ? "md:col-span-2" : ""}>
-            <span className="mb-1.5 block text-xs font-semibold text-slate-700">
+      <div className="mt-5 grid gap-x-5 gap-y-4 sm:grid-cols-2">
+        {formFields.map((field) => (
+          <label key={field.key} className={field.span ? "sm:col-span-2" : ""}>
+            <span className="mb-1.5 block text-[14.5px] font-medium text-[#1F2937]">
               {field.label}
             </span>
             <input
@@ -170,21 +204,21 @@ export function SignupForm() {
                 }))
               }
               placeholder={`Enter ${field.label.toLowerCase()}`}
-              className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+              className="h-[46px] w-full rounded-full border border-[#E5E7EB] bg-white px-5 text-[14.5px] text-[#0F172A] outline-none transition placeholder:text-[#9CA3AF] focus:border-[#2F5BEA] focus:ring-[3px] focus:ring-[#2F5BEA]/15 sm:h-[50px]"
             />
           </label>
         ))}
       </div>
 
       {/* Footer Action Row */}
-      <div className="mt-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-        <p className="max-w-xs text-xs text-slate-400 leading-snug">
+      <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <p className="text-[12.5px] leading-snug text-[#9CA3AF] xl:text-[13px]">
           We will only use this for launch updates, demos, and investor follow-ups.
         </p>
         <button
           type="submit"
           disabled={status === "loading"}
-          className="rounded-full bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-md shadow-blue-500/20 transition hover:bg-blue-700 active:scale-98 disabled:cursor-not-allowed disabled:opacity-60"
+          className="h-[48px] shrink-0 rounded-full bg-[linear-gradient(180deg,#3B63E8_0%,#2748C9_100%)] px-7 text-[14.5px] font-semibold text-white shadow-[0_8px_20px_rgba(47,91,234,0.26)] transition hover:brightness-105 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
         >
           {status === "loading" ? "Submitting..." : "Request Early Access"}
         </button>
