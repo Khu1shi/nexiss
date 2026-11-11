@@ -20,36 +20,40 @@ export function PortalShell({ children, role, title, subtitle }: PortalShellProp
   const roleCopy = portalRoleCopy[role];
 
   return (
-    <main className="mx-auto max-w-[110rem] px-4 py-5 sm:px-6 lg:px-8 xl:py-6">
-      <div className="grid gap-5 xl:grid-cols-[18rem_minmax(0,1fr)]">
-        <aside className="panel relative overflow-hidden rounded-[32px] p-5 xl:min-h-[calc(100vh-6.5rem)] xl:sticky xl:top-24">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(79,209,255,0.14),transparent_30%),radial-gradient(circle_at_bottom_right,rgba(31,111,255,0.08),transparent_32%)]" />
-          <div className="relative">
+    <main className="relative z-10 overflow-x-clip bg-[radial-gradient(circle_at_18%_18%,rgba(59,130,246,0.06),transparent_44%),linear-gradient(135deg,#F1F5FD_0%,#FAFBFF_65%,#F7F9FF_100%)] font-[family-name:var(--font-jakarta),var(--font-sans),sans-serif]">
+      <div className="mx-auto max-w-[1600px] px-4 py-5 sm:px-6 lg:px-8 lg:py-6">
+        <div className="grid gap-5 xl:grid-cols-[16.5rem_minmax(0,1fr)] xl:items-start xl:gap-6">
+          {/* Left Navigation Sidebar Card */}
+          <aside className="min-w-0 rounded-[24px] border border-[rgba(99,115,160,0.14)] bg-white p-5 shadow-[0_12px_40px_rgba(30,64,175,0.08)] md:rounded-[28px] xl:sticky xl:top-24">
             <Link href="/" className="flex items-center gap-3">
-              <div className="grid h-12 w-12 place-items-center overflow-hidden rounded-2xl border border-cyan/20 bg-white/90 shadow-[0_12px_30px_rgba(31,111,255,0.12)]">
+              <div className="grid h-10 w-10 place-items-center overflow-hidden rounded-xl border border-[rgba(99,115,160,0.18)] bg-[#F8FAFF] shadow-[0_4px_14px_rgba(30,64,175,0.08)]">
                 <Image
                   src="/brand/nexisgeo-logo.png"
                   alt="NexisGEO logo"
-                  width={40}
-                  height={40}
-                  className="h-9 w-9 object-contain"
+                  width={36}
+                  height={36}
+                  className="h-7 w-7 object-contain"
                   priority
                 />
               </div>
               <div>
-                <p className="text-sm font-semibold tracking-[0.28em] text-ink">NEXISGEO</p>
-                <p className="font-mono text-xs text-slate-500">Portal shell</p>
+                <p className="text-[13px] font-bold tracking-[0.22em] text-[#0F172A]">NEXISGEO</p>
+                <p className="text-[11.5px] font-medium text-[#6B7280]">Portal shell</p>
               </div>
             </Link>
 
-            <div className="mt-6 rounded-[24px] border border-slate-200 bg-white/80 p-4">
-              <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-cyan">{roleCopy.label}</p>
-              <p className="mt-2 text-sm leading-6 text-slate-600">{roleCopy.detail}</p>
+            <div className="mt-5 rounded-[20px] border border-[rgba(99,115,160,0.14)] bg-[#FBFCFF] p-4">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#2F4FD8]">
+                {roleCopy.label}
+              </p>
+              <p className="mt-1.5 text-[13px] leading-[1.5] text-[#5B6472]">{roleCopy.detail}</p>
             </div>
 
-            <div className="mt-6">
-              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-slate-400">Navigation</p>
-              <div className="mt-3 space-y-2">
+            <div className="mt-5">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#6B7280]">
+                Navigation
+              </p>
+              <nav aria-label="Portal navigation" className="mt-2.5 space-y-1.5">
                 {navItems.map((item) => {
                   const active = pathname === item.href;
 
@@ -57,69 +61,88 @@ export function PortalShell({ children, role, title, subtitle }: PortalShellProp
                     <Link
                       key={item.href}
                       href={item.href}
-                      className={`flex items-center justify-between rounded-2xl px-4 py-3 text-sm transition ${
+                      className={`flex items-center justify-between rounded-[14px] px-3.5 py-2.5 text-[13.5px] transition ${
                         active
-                          ? "border border-cyan/20 bg-cyan/10 text-ink shadow-[0_10px_24px_rgba(79,209,255,0.12)]"
-                          : "border border-transparent bg-white/50 text-slate-600 hover:border-slate-200 hover:bg-white/85 hover:text-ink"
+                          ? "border border-[#D5E2FA] bg-[#EEF4FF] font-semibold text-[#0F172A]"
+                          : "border border-transparent bg-transparent font-medium text-[#4B5563] hover:border-[rgba(99,115,160,0.14)] hover:bg-[#FBFCFF] hover:text-[#0F172A]"
                       }`}
                     >
-                      <span className="font-medium">{item.label}</span>
-                      <span className="rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500">
+                      <span>{item.label}</span>
+                      <span
+                        className={`rounded-full px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.1em] ${
+                          active
+                            ? "border border-[#D5E2FA] bg-white text-[#2563EB]"
+                            : "bg-[#F1F5FD] text-[#64748B]"
+                        }`}
+                      >
                         {item.tag}
                       </span>
                     </Link>
                   );
                 })}
-              </div>
+              </nav>
             </div>
 
-            <div className="mt-6 rounded-[24px] border border-slate-200 bg-[linear-gradient(180deg,rgba(255,255,255,0.92),rgba(243,248,255,0.88))] p-4">
-              <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-slate-500">Portal split</p>
-              <div className="mt-4 space-y-3">
-                <div className="rounded-2xl border border-slate-200 bg-white/85 p-3">
-                  <p className="text-sm font-semibold text-ink">User portal</p>
-                  <p className="mt-1 text-sm leading-6 text-slate-500">
+            <div className="mt-5 rounded-[20px] border border-[rgba(99,115,160,0.14)] bg-[#FBFCFF] p-4">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#6B7280]">
+                Portal split
+              </p>
+              <div className="mt-3 space-y-2.5">
+                <div className="rounded-[14px] border border-[rgba(99,115,160,0.14)] bg-white p-3">
+                  <p className="text-[13px] font-bold text-[#0F172A]">User portal</p>
+                  <p className="mt-1 text-[12px] leading-[1.45] text-[#6B7280]">
                     Brand teams, agencies, growth operators
                   </p>
                 </div>
-                <div className="rounded-2xl border border-slate-200 bg-white/85 p-3">
-                  <p className="text-sm font-semibold text-ink">Admin portal</p>
-                  <p className="mt-1 text-sm leading-6 text-slate-500">
+                <div className="rounded-[14px] border border-[rgba(99,115,160,0.14)] bg-white p-3">
+                  <p className="text-[13px] font-bold text-[#0F172A]">Admin portal</p>
+                  <p className="mt-1 text-[12px] leading-[1.45] text-[#6B7280]">
                     Internal workspace review, launch ops, investor control
                   </p>
                 </div>
               </div>
             </div>
-          </div>
-        </aside>
+          </aside>
 
-        <section className="panel relative overflow-hidden rounded-[32px] p-5 md:p-6 xl:min-h-[calc(100vh-6.5rem)] xl:p-7">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(79,209,255,0.16),transparent_30%),radial-gradient(circle_at_bottom_left,rgba(138,92,255,0.06),transparent_26%)]" />
-          <div className="relative">
-            <div className="flex flex-col gap-4 border-b border-slate-200/80 pb-5 lg:flex-row lg:items-start lg:justify-between">
-              <div>
-                <p className="font-mono text-xs uppercase tracking-[0.28em] text-cyan">{roleCopy.label}</p>
-                <h1 className="mt-3 text-3xl font-semibold tracking-tight text-ink md:text-5xl">
+          {/* Main Workspace Area (sits directly on page background without outer glass card) */}
+          <section className="min-w-0">
+            <div className="flex flex-col gap-4 border-b border-[rgba(99,115,160,0.14)] pb-5 lg:flex-row lg:items-start lg:justify-between">
+              <div className="min-w-0">
+                <span className="inline-flex w-fit items-center rounded-full border border-[#D5E2FA] bg-[#EEF4FF] px-4 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#2563EB]">
+                  {roleCopy.label}
+                </span>
+                <h1 className="mt-3 text-[clamp(28px,2.5vw,38px)] font-extrabold leading-[1.1] tracking-[-0.03em] text-[#0F172A]">
                   {title}
                 </h1>
-                <p className="mt-3 max-w-3xl text-base leading-7 text-slate-600">{subtitle}</p>
+                <p className="mt-2 max-w-3xl text-[14.5px] leading-[1.55] text-[#5B6472] sm:text-[15px]">
+                  {subtitle}
+                </p>
               </div>
 
-              <div className="grid gap-3 sm:grid-cols-2 lg:min-w-[22rem]">
-                <div className="rounded-2xl border border-slate-200 bg-white/85 p-4">
-                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-slate-400">Workspace</p>
-                  <p className="mt-2 text-base font-semibold text-ink">Mumbai Pilot Workspace</p>
+              <div className="grid shrink-0 gap-3 sm:grid-cols-2 lg:min-w-[21rem]">
+                <div className="rounded-[18px] border border-[rgba(99,115,160,0.14)] bg-white px-4 py-3.5 shadow-[0_8px_30px_rgba(30,64,175,0.06)]">
+                  <p className="text-[10.5px] font-semibold uppercase tracking-[0.14em] text-[#6B7280]">
+                    Workspace
+                  </p>
+                  <p className="mt-1.5 text-[14.5px] font-bold text-[#0F172A]">
+                    Mumbai Pilot Workspace
+                  </p>
                 </div>
-                <div className="rounded-2xl border border-slate-200 bg-white/85 p-4">
-                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-slate-400">Status</p>
-                  <p className="mt-2 text-base font-semibold text-emerald-600">Signals active</p>
+                <div className="rounded-[18px] border border-[rgba(99,115,160,0.14)] bg-white px-4 py-3.5 shadow-[0_8px_30px_rgba(30,64,175,0.06)]">
+                  <p className="text-[10.5px] font-semibold uppercase tracking-[0.14em] text-[#6B7280]">
+                    Status
+                  </p>
+                  <p className="mt-1.5 inline-flex items-center gap-2 text-[14.5px] font-bold text-[#15803D]">
+                    <span className="h-2 w-2 rounded-full bg-[#34C38F]" />
+                    Signals active
+                  </p>
                 </div>
               </div>
             </div>
 
-            <div className="mt-6">{children}</div>
-          </div>
-        </section>
+            <div className="mt-5">{children}</div>
+          </section>
+        </div>
       </div>
     </main>
   );

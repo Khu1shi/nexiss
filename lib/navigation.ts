@@ -1,9 +1,10 @@
 export const topNavLinks = [
-  { href: "#product", label: "Product" },
-  { href: "#how-it-works", label: "How It Works" },
-  { href: "#demo", label: "Demo" },
-  { href: "#case-studies", label: "Case Studies" },
-  { href: "#faq", label: "FAQ" },
+  { href: "/#product", label: "Product" },
+  { href: "/#how-it-works", label: "How It Works" },
+  { href: "/#demo", label: "Demo" },
+  { href: "/#platform", label: "Platform" },
+  { href: "/#roadmap", label: "Roadmap" },
+  { href: "/#faq", label: "FAQ" },
   { href: "/login", label: "Login" }
 ] as const;
 
@@ -20,12 +21,12 @@ export const toolLinks = [
   {
     href: "/global-monitoring",
     title: "Global GEO Monitoring",
-    description: "Track how your cafe appears across AI engines, geographies, and query clusters."
+    description: "Track how your brand appears across AI engines, geographies, and query clusters."
   },
   {
     href: "/geo-ranking-check",
     title: "GEO Ranking Checker",
-    description: "Benchmark where your cafe shows up in AI answers, citations, and recommendation order."
+    description: "Benchmark where your brand shows up in AI answers, citations, and recommendation order."
   },
   {
     href: "/geo-boost",

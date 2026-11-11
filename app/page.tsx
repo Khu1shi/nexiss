@@ -1,3 +1,4 @@
+import { FaqSection } from "@/sections/faq-section";
 import { GeoDefinitionSection } from "@/sections/geo-definition-section";
 import { HeroSection } from "@/sections/hero-section";
 import { InvestorSection } from "@/sections/investor-section";
@@ -20,8 +21,9 @@ export default function HomePage() {
       <ProductDashboardSection />
       <RoadmapSection />
       <WhySection />
-      <SignupSection />
       <InvestorSection />
+      <SignupSection />
+      <FaqSection />
     </main>
   );
 }

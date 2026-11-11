@@ -3,11 +3,11 @@ import Link from "next/link";
 import { PortalShell } from "@/components/portal-shell";
 
 const competitiveKpis = [
-  { label: "Tracked competitors", value: "28", delta: "6 high-priority", tone: "text-electric bg-cyan/10" },
-  { label: "Avg rank gap", value: "1.9", delta: "-0.4 narrowed", tone: "text-emerald-600 bg-emerald-50" },
-  { label: "Citation overlap", value: "37%", delta: "+5.2 this week", tone: "text-violet-700 bg-violet/15" },
-  { label: "Contested prompts", value: "412", delta: "78 active today", tone: "text-amber-700 bg-amber-50" }
-];
+  { label: "Tracked competitors", value: "28", delta: "6 high-priority", tone: "bg-[#EEF4FF] text-[#2563EB]" },
+  { label: "Avg rank gap", value: "1.9", delta: "-0.4 narrowed", tone: "bg-[#E3F7EE] text-[#15803D]" },
+  { label: "Citation overlap", value: "37%", delta: "+5.2 this week", tone: "bg-[#EEEAFE] text-[#7C5CF0]" },
+  { label: "Contested prompts", value: "412", delta: "78 active today", tone: "bg-[#FDF3D8] text-[#B45309]" }
+] as const;
 
 const competitorLeaderboard = [
   ["Subko Andheri", "#1.8", "42%", "+2.1"],
@@ -15,14 +15,14 @@ const competitorLeaderboard = [
   ["Leaping Windows Cafe", "#2.9", "24%", "+1.2"],
   ["Prithvi Cafe Juhu", "#3.6", "18%", "+0.9"],
   ["Your Cafe", "#4.1", "16%", "+1.4"]
-];
+] as const;
 
 const engineWins = [
   ["ChatGPT", 44, 26, 18, 12],
   ["Gemini", 39, 28, 21, 12],
   ["Claude", 33, 25, 24, 18],
   ["Perplexity", 35, 22, 26, 17]
-];
+] as const;
 
 const citationSources = [
   ["Competitor blogs", 32],
@@ -30,7 +30,7 @@ const citationSources = [
   ["Docs and knowledge bases", 19],
   ["Industry media", 15],
   ["Community threads", 10]
-];
+] as const;
 
 const contestedPrompts = [
   ["Best cafes in Andheri for dates", "Subko Andheri", "Blue Tokai Andheri", "Medium"],
@@ -39,16 +39,16 @@ const contestedPrompts = [
   ["Top aesthetic cafes near Andheri", "Subko Andheri", "Prithvi Cafe Juhu", "High"],
   ["Best budget cafes in Andheri", "Leaping Windows Cafe", "Blue Tokai Andheri", "Watch"],
   ["Late-night cafes in Andheri", "Blue Tokai Andheri", "Subko Andheri", "Watch"]
-];
+] as const;
 
 const responseQueue = [
   ["Create comparison page for date-night cafe prompts", "Content", "Today", "Assigned"],
   ["Add proof blocks to work-friendly cafe pages", "Operations", "Tomorrow", "In review"],
   ["Refresh structured data on competitor-contested pages", "Technical", "2 days", "Planned"],
   ["Expand citation assets for coffee-quality prompt set", "Content", "3 days", "Assigned"]
-];
+] as const;
 
-const sentimentTrail: Array<[string, number]> = [
+const sentimentTrail: ReadonlyArray<readonly [string, number]> = [
   ["Mon", 58],
   ["Tue", 62],
   ["Wed", 64],
@@ -62,7 +62,7 @@ const adminSignals = [
   ["Competitor surge in Mumbai cohort", "Escalate", "7 min ago"],
   ["Model behavior shift in Gemini answer style", "Review", "15 min ago"],
   ["Investor request: competitor snapshot export", "Ready", "24 min ago"]
-];
+] as const;
 
 export default function CompetitorAnalysisPage() {
   return (
@@ -72,36 +72,60 @@ export default function CompetitorAnalysisPage() {
       subtitle="Understand which cafes AI systems prefer, where they outrank you, and what optimization responses can close recommendation gaps."
     >
       <div className="grid items-start gap-4 xl:grid-cols-[1.12fr_0.88fr]">
-        <div className="grid content-start gap-4 self-start">
-          <div className="grid items-start gap-4 md:grid-cols-2 xl:grid-cols-4">
+        {/* Left Column */}
+        <div className="min-w-0 flex flex-col gap-4">
+          {/* 4 Competitive KPIs */}
+          <div className="grid gap-3.5 sm:grid-cols-2 xl:grid-cols-4">
             {competitiveKpis.map((item) => (
-              <article key={item.label} className="surface-card self-start rounded-[24px] p-5 min-h-[15rem] flex flex-col">
-                <p className="min-h-[4.2rem] font-mono text-[11px] uppercase tracking-[0.22em] text-slate-500">{item.label}</p>
-                <p className="mt-1 min-h-[3.5rem] text-3xl font-semibold text-ink">{item.value}</p>
-                <span className={`mt-auto inline-flex min-h-[3.2rem] items-center rounded-full px-5 py-2 text-[11px] font-semibold ${item.tone}`}>
-                  {item.delta}
-                </span>
+              <article
+                key={item.label}
+                className="min-w-0 flex h-full flex-col justify-between rounded-[20px] border border-[rgba(99,115,160,0.14)] bg-white p-4 shadow-[0_8px_30px_rgba(30,64,175,0.06)]"
+              >
+                <p className="text-[10.5px] font-semibold uppercase leading-snug tracking-[0.11em] text-[#6B7280]">
+                  {item.label}
+                </p>
+                <div className="mt-3">
+                  <p className="text-[26px] font-extrabold leading-none tracking-[-0.03em] text-[#0F172A] xl:text-[28px]">
+                    {item.value}
+                  </p>
+                  <span
+                    className={`mt-2.5 inline-flex rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${item.tone}`}
+                  >
+                    {item.delta}
+                  </span>
+                </div>
               </article>
             ))}
           </div>
 
-          <article className="surface-card rounded-[28px] p-5">
-            <div className="flex flex-col gap-3 border-b border-slate-200 pb-4 sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-cyan">Competitor leaderboard</p>
-                <p className="mt-2 text-lg font-semibold text-ink">Top cafes recommended across tracked prompt clusters</p>
+          {/* Competitor Leaderboard */}
+          <article className="min-w-0 rounded-[24px] border border-[rgba(99,115,160,0.14)] bg-white p-5 shadow-[0_8px_30px_rgba(30,64,175,0.06)]">
+            <div className="flex flex-col gap-3 border-b border-[rgba(99,115,160,0.12)] pb-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="min-w-0">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#2F4FD8]">
+                  Competitor leaderboard
+                </p>
+                <p className="mt-1.5 text-[17px] font-bold tracking-[-0.02em] text-[#0F172A]">
+                  Top cafes recommended across tracked prompt clusters
+                </p>
               </div>
-              <Link href="/geo-ranking-check" className="text-sm font-semibold text-electric transition hover:text-ink">
+              <Link
+                href="/geo-ranking-check"
+                className="shrink-0 text-[13px] font-semibold text-[#2563EB] transition hover:text-[#1D4ED8]"
+              >
                 Open ranking checker
               </Link>
             </div>
 
             <div className="mt-4 overflow-x-auto">
-              <table className="w-full min-w-[48rem]">
+              <table className="w-full min-w-[36rem]">
                 <thead>
-                  <tr className="border-b border-slate-200 text-left">
+                  <tr className="border-b border-[rgba(99,115,160,0.14)] text-left">
                     {["Cafe", "Avg rank", "Answer share", "7d movement"].map((head) => (
-                      <th key={head} className="pb-3 pr-4 font-mono text-[10px] uppercase tracking-[0.18em] text-slate-400">
+                      <th
+                        key={head}
+                        className="pb-3 pr-4 text-[10.5px] font-semibold uppercase tracking-[0.12em] text-[#6B7280]"
+                      >
                         {head}
                       </th>
                     ))}
@@ -109,18 +133,23 @@ export default function CompetitorAnalysisPage() {
                 </thead>
                 <tbody>
                   {competitorLeaderboard.map(([brand, rank, share, movement], index) => (
-                    <tr key={brand} className="border-b border-slate-100 last:border-b-0">
-                      <td className="py-4 pr-4 text-sm font-semibold text-ink">{brand}</td>
-                      <td className="py-4 pr-4 text-sm text-slate-600">{rank}</td>
-                      <td className="py-4 pr-4 text-sm text-slate-600">{share}</td>
-                      <td className="py-4 pr-4">
+                    <tr
+                      key={brand}
+                      className="border-b border-[rgba(99,115,160,0.1)] last:border-b-0"
+                    >
+                      <td className="py-3.5 pr-4 text-[13.5px] font-semibold text-[#0F172A]">
+                        {brand}
+                      </td>
+                      <td className="py-3.5 pr-4 text-[13.5px] text-[#5B6472]">{rank}</td>
+                      <td className="py-3.5 pr-4 text-[13.5px] text-[#5B6472]">{share}</td>
+                      <td className="py-3.5 pr-4">
                         <span
-                          className={`rounded-full px-2.5 py-1 text-[11px] font-semibold ${
+                          className={`rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${
                             index === 0
                               ? "bg-rose-50 text-rose-600"
                               : brand === "Your Cafe"
-                                ? "bg-emerald-50 text-emerald-600"
-                                : "bg-cyan/10 text-electric"
+                                ? "bg-[#E3F7EE] text-[#15803D]"
+                                : "bg-[#EEF4FF] text-[#2563EB]"
                           }`}
                         >
                           {movement}
@@ -132,62 +161,78 @@ export default function CompetitorAnalysisPage() {
               </table>
             </div>
 
-            <div className="mt-4 grid gap-3 md:grid-cols-4">
+            <div className="mt-4 grid gap-3 sm:grid-cols-2 md:grid-cols-4">
               {[
                 ["Top-3 prompt overlap", "224"],
                 ["Net gap closed", "+17"],
                 ["Citation wins this week", "39"],
                 ["Prompt clusters monitored", "52"]
               ].map(([label, value]) => (
-                <div key={label} className="rounded-[18px] border border-slate-200 bg-white/85 px-4 py-3">
-                  <p className="text-xs text-slate-500">{label}</p>
-                  <p className="mt-1 text-xl font-semibold text-ink">{value}</p>
+                <div
+                  key={label}
+                  className="rounded-[16px] border border-[rgba(99,115,160,0.14)] bg-[#FBFCFF] px-3.5 py-3"
+                >
+                  <p className="text-[11.5px] font-medium text-[#6B7280]">{label}</p>
+                  <p className="mt-1 text-[19px] font-extrabold tracking-[-0.02em] text-[#0F172A]">
+                    {value}
+                  </p>
                 </div>
               ))}
             </div>
           </article>
 
-          <article className="surface-card rounded-[28px] p-5">
-            <div className="flex flex-col gap-3 border-b border-slate-200 pb-4 sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-cyan">Contested prompt map</p>
-                <p className="mt-2 text-lg font-semibold text-ink">Prompts where competitor dominance can be challenged</p>
+          {/* Contested Prompt Map */}
+          <article className="min-w-0 rounded-[24px] border border-[rgba(99,115,160,0.14)] bg-white p-5 shadow-[0_8px_30px_rgba(30,64,175,0.06)]">
+            <div className="flex flex-col gap-3 border-b border-[rgba(99,115,160,0.12)] pb-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="min-w-0">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#2F4FD8]">
+                  Contested prompt map
+                </p>
+                <p className="mt-1.5 text-[17px] font-bold tracking-[-0.02em] text-[#0F172A]">
+                  Prompts where competitor dominance can be challenged
+                </p>
               </div>
-              <Link href="/geo-boost" className="text-sm font-semibold text-electric transition hover:text-ink">
+              <Link
+                href="/geo-boost"
+                className="shrink-0 text-[13px] font-semibold text-[#2563EB] transition hover:text-[#1D4ED8]"
+              >
                 Open GEO boost
               </Link>
             </div>
 
-            <div className="mt-4 space-y-3">
+            <div className="mt-4 space-y-2.5">
               {contestedPrompts.map(([prompt, leader, challenger, urgency], index) => (
-                <div key={prompt} className="rounded-[22px] border border-slate-200 bg-white/85 px-4 py-4">
-                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                    <div>
-                      <p className="text-sm font-semibold text-ink">{prompt}</p>
-                      <p className="mt-1 text-sm text-slate-500">
+                <div
+                  key={prompt}
+                  className="rounded-[16px] border border-[rgba(99,115,160,0.14)] bg-[#FBFCFF] px-4 py-3.5"
+                >
+                  <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="min-w-0">
+                      <p className="text-[14px] font-semibold text-[#0F172A]">{prompt}</p>
+                      <p className="mt-0.5 text-[12.5px] text-[#6B7280]">
                         Leader: {leader} | Challenger: {challenger}
                       </p>
                     </div>
                     <span
-                      className={`w-fit rounded-full px-2.5 py-1 text-[11px] font-semibold ${
+                      className={`w-fit shrink-0 rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${
                         urgency === "High"
                           ? "bg-rose-50 text-rose-600"
                           : urgency === "Medium"
-                            ? "bg-amber-50 text-amber-600"
-                            : "bg-slate-100 text-slate-600"
+                            ? "bg-[#FDF3D8] text-[#B45309]"
+                            : "bg-[#F1F5FD] text-[#64748B]"
                       }`}
                     >
                       {urgency}
                     </span>
                   </div>
-                  <div className="mt-3 h-2 rounded-full bg-slate-200">
+                  <div className="mt-2.5 h-2 overflow-hidden rounded-full bg-[#E5E9F2]">
                     <div
-                      className={`h-2 rounded-full ${
+                      className={`h-full rounded-full ${
                         index % 3 === 0
-                          ? "bg-gradient-to-r from-cyan to-electric"
+                          ? "bg-[linear-gradient(90deg,#38A9F2_0%,#2563EB_100%)]"
                           : index % 3 === 1
-                            ? "bg-gradient-to-r from-electric to-violet"
-                            : "bg-gradient-to-r from-violet to-pink-400"
+                            ? "bg-[linear-gradient(90deg,#2563EB_0%,#7C5CF0_100%)]"
+                            : "bg-[linear-gradient(90deg,#7C5CF0_0%,#A855F7_100%)]"
                       }`}
                       style={{ width: `${74 - index * 8}%` }}
                     />
@@ -198,63 +243,76 @@ export default function CompetitorAnalysisPage() {
           </article>
         </div>
 
-        <div className="grid content-start gap-4 self-start">
-          <article className="surface-card rounded-[28px] p-5">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-cyan">Engine win distribution</p>
-                <p className="mt-2 text-lg font-semibold text-ink">Share of wins by engine and top competitors</p>
+        {/* Right Column */}
+        <div className="min-w-0 flex flex-col gap-4">
+          {/* Engine Win Distribution */}
+          <article className="min-w-0 rounded-[24px] border border-[rgba(99,115,160,0.14)] bg-white p-5 shadow-[0_8px_30px_rgba(30,64,175,0.06)]">
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#2F4FD8]">
+                  Engine win distribution
+                </p>
+                <p className="mt-1.5 text-[16.5px] font-bold tracking-[-0.02em] text-[#0F172A]">
+                  Share of wins by engine and top competitors
+                </p>
               </div>
-              <span className="rounded-full bg-cyan/10 px-2.5 py-1 text-[11px] font-semibold text-electric">Live</span>
+              <span className="shrink-0 rounded-full bg-[#EEF4FF] px-2.5 py-0.5 text-[11px] font-semibold text-[#2563EB]">
+                Live
+              </span>
             </div>
 
-            <div className="mt-4 space-y-4">
+            <div className="mt-4 space-y-3.5">
               {engineWins.map(([engine, a, b, c, d]) => (
                 <div key={engine}>
-                  <div className="mb-1 flex items-center justify-between text-sm text-slate-600">
-                    <span>{engine}</span>
-                    <span className="font-semibold text-ink">{a}% lead share</span>
+                  <div className="mb-1.5 flex items-center justify-between text-[13px] text-[#4B5563]">
+                    <span className="font-medium">{engine}</span>
+                    <span className="font-semibold text-[#0F172A]">{a}% lead share</span>
                   </div>
-                  <div className="flex h-3 overflow-hidden rounded-full bg-slate-200">
-                    <div className="bg-cyan" style={{ width: `${a}%` }} />
-                    <div className="bg-electric" style={{ width: `${b}%` }} />
-                    <div className="bg-violet" style={{ width: `${c}%` }} />
-                    <div className="bg-pink-400" style={{ width: `${d}%` }} />
+                  <div className="flex h-2.5 overflow-hidden rounded-full bg-[#E5E9F2]">
+                    <div className="bg-[#38A9F2]" style={{ width: `${a}%` }} />
+                    <div className="bg-[#2563EB]" style={{ width: `${b}%` }} />
+                    <div className="bg-[#7C5CF0]" style={{ width: `${c}%` }} />
+                    <div className="bg-[#A855F7]" style={{ width: `${d}%` }} />
                   </div>
                 </div>
               ))}
             </div>
           </article>
 
-          <article className="surface-card rounded-[28px] p-5">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-cyan">Citation source mix</p>
-                <p className="mt-2 text-lg font-semibold text-ink">Where competitors are sourcing answer authority</p>
+          {/* Citation Source Mix */}
+          <article className="min-w-0 rounded-[24px] border border-[rgba(99,115,160,0.14)] bg-white p-5 shadow-[0_8px_30px_rgba(30,64,175,0.06)]">
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#2F4FD8]">
+                  Citation source mix
+                </p>
+                <p className="mt-1.5 text-[16.5px] font-bold tracking-[-0.02em] text-[#0F172A]">
+                  Where competitors are sourcing answer authority
+                </p>
               </div>
-              <span className="rounded-full bg-violet/15 px-2.5 py-1 text-[11px] font-semibold text-violet-700">
+              <span className="shrink-0 rounded-full bg-[#EEEAFE] px-2.5 py-0.5 text-[11px] font-semibold text-[#7C5CF0]">
                 Weekly
               </span>
             </div>
             <div className="mt-4 space-y-3">
               {citationSources.map(([source, value], index) => (
                 <div key={source}>
-                  <div className="flex items-center justify-between text-sm text-slate-600">
-                    <span>{source}</span>
-                    <span className="font-semibold text-ink">{value}%</span>
+                  <div className="flex items-center justify-between text-[13px] text-[#4B5563]">
+                    <span className="font-medium">{source}</span>
+                    <span className="font-semibold text-[#0F172A]">{value}%</span>
                   </div>
-                  <div className="mt-1.5 h-2 rounded-full bg-slate-200">
+                  <div className="mt-1.5 h-2 overflow-hidden rounded-full bg-[#E5E9F2]">
                     <div
-                      className={`h-2 rounded-full ${
+                      className={`h-full rounded-full ${
                         index === 0
-                          ? "bg-gradient-to-r from-cyan to-electric"
+                          ? "bg-[linear-gradient(90deg,#38A9F2_0%,#2563EB_100%)]"
                           : index === 1
-                            ? "bg-gradient-to-r from-electric to-violet"
+                            ? "bg-[linear-gradient(90deg,#2563EB_0%,#7C5CF0_100%)]"
                             : index === 2
-                              ? "bg-gradient-to-r from-violet to-pink-400"
+                              ? "bg-[linear-gradient(90deg,#7C5CF0_0%,#A855F7_100%)]"
                               : index === 3
-                                ? "bg-gradient-to-r from-pink-400 to-orange-400"
-                                : "bg-gradient-to-r from-slate-500 to-slate-400"
+                                ? "bg-[#F4B63F]"
+                                : "bg-[#94A3B8]"
                       }`}
                       style={{ width: `${value}%` }}
                     />
@@ -264,30 +322,45 @@ export default function CompetitorAnalysisPage() {
             </div>
           </article>
 
-          <article className="surface-card rounded-[28px] p-5">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-cyan">Response queue</p>
-                <p className="mt-2 text-lg font-semibold text-ink">Action plan to reclaim recommendation share</p>
+          {/* Response Queue */}
+          <article className="min-w-0 rounded-[24px] border border-[rgba(99,115,160,0.14)] bg-white p-5 shadow-[0_8px_30px_rgba(30,64,175,0.06)]">
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#2F4FD8]">
+                  Response queue
+                </p>
+                <p className="mt-1.5 text-[16.5px] font-bold tracking-[-0.02em] text-[#0F172A]">
+                  Action plan to reclaim recommendation share
+                </p>
               </div>
-              <Link href="/reports" className="text-sm font-semibold text-electric transition hover:text-ink">
+              <Link
+                href="/reports"
+                className="shrink-0 text-[12.5px] font-semibold text-[#2563EB] transition hover:text-[#1D4ED8]"
+              >
                 Export queue
               </Link>
             </div>
-            <div className="mt-4 space-y-3">
+            <div className="mt-4 space-y-2.5">
               {responseQueue.map(([task, lane, eta, status]) => (
-                <div key={task} className="rounded-[20px] border border-slate-200 bg-white/85 px-4 py-3">
-                  <p className="text-sm font-semibold text-ink">{task}</p>
-                  <div className="mt-2 flex flex-wrap items-center gap-2 text-xs">
-                    <span className="rounded-full bg-slate-100 px-2.5 py-1 font-semibold text-slate-600">{lane}</span>
-                    <span className="rounded-full bg-cyan/10 px-2.5 py-1 font-semibold text-electric">{eta}</span>
+                <div
+                  key={task}
+                  className="rounded-[16px] border border-[rgba(99,115,160,0.14)] bg-[#FBFCFF] px-4 py-3"
+                >
+                  <p className="text-[13.5px] font-semibold text-[#0F172A]">{task}</p>
+                  <div className="mt-2 flex flex-wrap items-center gap-2 text-[11px]">
+                    <span className="rounded-full bg-[#F1F5FD] px-2.5 py-0.5 font-semibold text-[#64748B]">
+                      {lane}
+                    </span>
+                    <span className="rounded-full bg-[#EEF4FF] px-2.5 py-0.5 font-semibold text-[#2563EB]">
+                      {eta}
+                    </span>
                     <span
-                      className={`rounded-full px-2.5 py-1 font-semibold ${
+                      className={`rounded-full px-2.5 py-0.5 font-semibold ${
                         status === "Assigned"
-                          ? "bg-emerald-50 text-emerald-600"
+                          ? "bg-[#E3F7EE] text-[#15803D]"
                           : status === "In review"
-                            ? "bg-violet/15 text-violet-700"
-                            : "bg-slate-100 text-slate-600"
+                            ? "bg-[#EEEAFE] text-[#7C5CF0]"
+                            : "bg-[#F1F5FD] text-[#64748B]"
                       }`}
                     >
                       {status}
@@ -298,58 +371,74 @@ export default function CompetitorAnalysisPage() {
             </div>
           </article>
 
-          <article className="surface-card rounded-[28px] p-5">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-cyan">Cafe momentum</p>
-                <p className="mt-2 text-lg font-semibold text-ink">Sentiment-aligned visibility trajectory</p>
+          {/* Cafe Momentum */}
+          <article className="min-w-0 rounded-[24px] border border-[rgba(99,115,160,0.14)] bg-white p-5 shadow-[0_8px_30px_rgba(30,64,175,0.06)]">
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#2F4FD8]">
+                  Cafe momentum
+                </p>
+                <p className="mt-1.5 text-[16.5px] font-bold tracking-[-0.02em] text-[#0F172A]">
+                  Sentiment-aligned visibility trajectory
+                </p>
               </div>
-              <span className="rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-semibold text-emerald-600">
+              <span className="shrink-0 rounded-full bg-[#E3F7EE] px-2.5 py-0.5 text-[11px] font-semibold text-[#15803D]">
                 Positive
               </span>
             </div>
-            <div className="mt-4 rounded-[20px] border border-slate-200 bg-white/85 p-4">
+            <div className="mt-4 rounded-[16px] border border-[rgba(99,115,160,0.14)] bg-[#FBFCFF] p-4">
               <div className="flex h-28 items-end gap-2">
                 {sentimentTrail.map(([day, value], index) => (
                   <div key={day} className="flex w-full flex-col items-center gap-2">
                     <div
-                      className="w-full rounded-t-md bg-gradient-to-t from-electric to-cyan"
+                      className="w-full rounded-t-[6px] bg-[linear-gradient(180deg,#38A9F2_0%,#2563EB_100%)]"
                       style={{ height: `${value}px`, opacity: 0.45 + index * 0.06 }}
                     />
-                    <p className="text-[11px] text-slate-400">{day}</p>
+                    <p className="text-[11px] font-medium text-[#94A3B8]">{day}</p>
                   </div>
                 ))}
               </div>
             </div>
           </article>
 
-          <article className="surface-card rounded-[28px] p-5">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-cyan">Admin signal handoff</p>
-                <p className="mt-2 text-lg font-semibold text-ink">Internal portal actions tied to competitor movement</p>
+          {/* Admin Signal Handoff */}
+          <article className="min-w-0 rounded-[24px] border border-[rgba(99,115,160,0.14)] bg-white p-5 shadow-[0_8px_30px_rgba(30,64,175,0.06)]">
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#2F4FD8]">
+                  Admin signal handoff
+                </p>
+                <p className="mt-1.5 text-[16.5px] font-bold tracking-[-0.02em] text-[#0F172A]">
+                  Internal portal actions tied to competitor movement
+                </p>
               </div>
-              <Link href="/onboarding" className="text-sm font-semibold text-electric transition hover:text-ink">
+              <Link
+                href="/onboarding"
+                className="shrink-0 text-[12.5px] font-semibold text-[#2563EB] transition hover:text-[#1D4ED8]"
+              >
                 Open admin portal
               </Link>
             </div>
-            <div className="mt-4 space-y-3">
+            <div className="mt-4 space-y-2.5">
               {adminSignals.map(([title, status, time], index) => (
-                <div key={title} className="rounded-[20px] border border-slate-200 bg-white/85 px-4 py-3">
-                  <p className="text-sm font-semibold text-ink">{title}</p>
-                  <div className="mt-2 flex items-center justify-between text-xs">
+                <div
+                  key={title}
+                  className="rounded-[16px] border border-[rgba(99,115,160,0.14)] bg-[#FBFCFF] px-4 py-3"
+                >
+                  <p className="text-[13.5px] font-semibold text-[#0F172A]">{title}</p>
+                  <div className="mt-2 flex items-center justify-between text-[12px]">
                     <span
-                      className={`rounded-full px-2.5 py-1 font-semibold ${
+                      className={`rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${
                         index === 0
                           ? "bg-rose-50 text-rose-600"
                           : index === 1
-                            ? "bg-amber-50 text-amber-600"
-                            : "bg-emerald-50 text-emerald-600"
+                            ? "bg-[#FDF3D8] text-[#B45309]"
+                            : "bg-[#E3F7EE] text-[#15803D]"
                       }`}
                     >
                       {status}
                     </span>
-                    <span className="text-slate-500">{time}</span>
+                    <span className="text-[#94A3B8]">{time}</span>
                   </div>
                 </div>
               ))}
