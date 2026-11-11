@@ -4,7 +4,8 @@ export const topNavLinks = [
   { href: "/#demo", label: "Demo" },
   { href: "/#platform", label: "Platform" },
   { href: "/#roadmap", label: "Roadmap" },
-  { href: "/#faq", label: "FAQ" }
+  { href: "/#faq", label: "FAQ" },
+  { href: "/login", label: "Login" }
 ] as const;
 
 export const footerLinks = [
